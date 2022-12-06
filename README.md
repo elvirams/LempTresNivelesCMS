@@ -136,7 +136,7 @@ Una vez realizados los cambios deberemos abrir el archivo **/etc/exports** y cre
 
   - **no_subtree_check**: evita la verificación de subárbol.
 
-Cuando termines de hacer los cambuos deberemos reiniciar el servidor NFS con el siguiente comando:
+Cuando termines de hacer los cambios deberemos reiniciar el servidor NFS con el siguiente comando:
 
     sudo systemctl restart nfs-kernel-server
 
@@ -216,7 +216,7 @@ Para la configuración de nuestro CMS en los servidores **NginxElviraM** y **Ngi
 
 Una vez copiado entraremos dentro del archivo **BalanceadorNginx**, cambiaremos la línea dónde pone **root /var/www/html** por **root /var/www/MoodleCMS**, el nombre de la carpeta que hemos montado anteriormente en esta ruta. Además, descomentaremos algunas líneas para la configuración y añadiremos a la línea dónde se encuentran los index, **index.php**.
 
-Hay que tener en cuenta que también en este archivo podemos modificar la directiva de configuración **fastcgi_pass**, para indicar la dirección y el puerto donde se encuentra el servidor FastCGI. En este caso se encuentra en el Servidor Nfs (**NfsElviraM**). Por lo tanto deberemos poner la dirección de esta máquina con el puerto 9000, **fastcgi_pass 192.168.4.7:9000**.
+Hay que tener en cuenta que también en este archivo podemos modificar la directiva de configuración **fastcgi_pass**, para indicar la dirección y el puerto donde se encuentra el servidor FastCGI. En este caso se encuentra en el Servidor Nfs (**NfsElviraM**). Por lo tanto, deberemos poner la dirección de esta máquina con el puerto 9000, **fastcgi_pass 192.168.4.7:9000**.
 
 ![](FOTOS/NginxElviraM/3.png)
 ![](FOTOS/NginxElviraM/4.png)
@@ -251,7 +251,7 @@ Para finalizar, deberemos configurar un servidor balanceador de carga (**Balance
 
 ### - **CONFIGURACIÓN BALANCEADOR HTTP**
 ---
-En primer lugar vamos a configurar nuestro balanceador, para que podemos acceder a el a través de **http** para ello debemos eliminar el archivo **/etc/nginx/sites-available/default**, y crearemos otro archivo llamado **ConfigBalanceador**, en su interior deberemos escribir lo siguiente:
+En primer lugar, vamos a configurar nuestro balanceador, para que podemos acceder a el a través de **http** para ello debemos eliminar el archivo **/etc/nginx/sites-available/default**, y crearemos otro archivo llamado **ConfigBalanceador**, en su interior deberemos escribir lo siguiente:
 
     cd /etc/nginx/sites-available
     sudo rm default
@@ -281,7 +281,7 @@ Llegado a este momento, comprobaremos que nuestro balanceador funciona correctam
 
 Para conectarnos de forma segura en nuestro balanceador, deberemos utilizar **https**, por ello utilizaremos el ssl. Lo primero que debemos hacer es crear un par de certificados autofirmados con el siguiente comando:
 
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/BalanceadorNginx.com.key -out /etc/ssl/certs/BalanceadorNginx.com.pem
+    sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/BalanceadorNginx.com.key -out /etc/ssl/certs/BalanceadorNginx.com.pem
 
 Con este comando crearemos dos partes, una clave privada y un certificado público.
 
@@ -302,7 +302,3 @@ Si la sintaxis es correcta, deberemos reiniciar nuestro servicio de nginx
     sudo systemctl restart nginx
     
 Llegado a este momento, comprobaremos que nuestro balanceador funciona correctamente **BalanceadorElviraM**. Verificaremos con la dirección pública de esta máquina, para acceder a nuestro CMS, en este caso deberemos buscar en nuestro navegador **https://** y la dirección pública. Tendrá que redirigirnos a nuestra la página web Moodle.
-
-En este caso, por la configuración de Moodle nuestra páguina se verá de la siguiente manera:
-
-![](FOTOS/BalanceadorElviraM/4.png)
